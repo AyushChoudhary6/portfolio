@@ -1,0 +1,7 @@
+# Chrome installer files
+*.deb
+*.deb.*
+
+# Other unnecessary files
+*.zip
+*.png

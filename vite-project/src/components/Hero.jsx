@@ -133,17 +133,10 @@ const Hero = () => {
           >
             <TypewriterText text="Ayush Choudhary" delay={1000} speed={150} />
           </motion.span>
-          <span className="block mt-2">Experience Designer</span>
-          <span className="block mt-2">at Hotjar</span>
+          <span className="block mt-2">Devops Engineer</span>
         </motion.h1>
         
-        {/* Subtitle */}
-        <motion.p 
-          className="text-lg md:text-xl text-gray-600 mb-12 font-normal max-w-2xl mx-auto"
-          variants={textVariants}
-        >
-          15 years of Design. Brazilian. Berlin based.
-        </motion.p>
+       
       </motion.div>
     </section>
   );

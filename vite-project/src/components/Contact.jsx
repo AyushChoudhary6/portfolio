@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -6,6 +7,7 @@ const Contact = () => {
     email: '',
     message: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -16,9 +18,45 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! I\'ll get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+    setIsLoading(true);
+
+    // EmailJS Configuration
+    const serviceID = 'service_9452ei9';     
+    const templateID = 'template_bgq0w89';   
+    const publicKey = 'wwhlYBF9uIqUIjD8M';         
+
+    // Backup solution: Open Gmail compose if EmailJS fails
+    // Backup solution: Open Gmail compose if EmailJS fails
+    const fallbackToGmail = () => {
+      const subject = `Portfolio Contact from ${formData.name}`;
+      const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
+      const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=ayushchoudhary6603@gmail.com&su=${encodeURIComponent(subject)}&body=${body}`;
+      
+      window.open(mailtoLink, '_blank');
+      alert('Gmail will open to send your message directly to Ayush!');
+      setFormData({ name: '', email: '', message: '' });
+      setIsLoading(false);
+    };
+
+    // EmailJS sending
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      to_name: 'Ayush',
+      message: formData.message,
+    };
+
+    emailjs.send(serviceID, templateID, templateParams, publicKey)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Thank you for your message! I\'ll get back to you soon.');
+        setFormData({ name: '', email: '', message: '' });
+        setIsLoading(false);
+      }, (error) => {
+        console.log('FAILED...', error);
+        alert('Sorry, there was an error sending your message. Opening Gmail as backup...');
+        fallbackToGmail();
+      });
   };
 
   return (
@@ -48,7 +86,14 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900 mb-1">Email</h3>
-                  <p className="text-gray-600">hello@yourname.com</p>
+                  <a 
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=ayushchoudhary6603@gmail.com&su=Hello%20Ayush&body=Hi%20Ayush,%0D%0A%0D%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you.%0D%0A%0D%0ABest%20regards"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+                  >
+                    ayushchoudhary6603@gmail.com
+                  </a>
                 </div>
               </div>
               
@@ -58,7 +103,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900 mb-1">Phone</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
+                  <p className="text-gray-600">+91 8368462519</p>
                 </div>
               </div>
               
@@ -68,38 +113,40 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900 mb-1">Location</h3>
-                  <p className="text-gray-600">San Francisco, CA</p>
+                  <p className="text-gray-600">New Delhi, India</p>
                 </div>
               </div>
             </div>
             
-            {/* Social Links */}
+            {/* Social Links - Only LinkedIn and GitHub */}
             <div className="mt-12 pt-8 border-t border-gray-100">
               <h3 className="font-bold text-gray-900 mb-6">Follow me</h3>
               <div className="flex gap-4">
                 <a 
-                  href="#" 
-                  className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-all duration-300"
+                  href="https://www.linkedin.com/in/ayush-choudhary-29aa01325/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center hover:bg-blue-600 transition-all duration-300 group"
+                  title="LinkedIn"
                 >
-                  <span className="text-xl">🔗</span>
+                  <img 
+                    src="/icons8-linkedin-48.png" 
+                    alt="LinkedIn" 
+                    className="w-6 h-6 group-hover:brightness-0 group-hover:invert transition-all duration-300"
+                  />
                 </a>
                 <a 
-                  href="#" 
-                  className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:bg-blue-400 hover:text-white transition-all duration-300"
+                  href="https://github.com/AyushChoudhary6" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center hover:bg-gray-800 transition-all duration-300 group"
+                  title="GitHub"
                 >
-                  <span className="text-xl">🐦</span>
-                </a>
-                <a 
-                  href="#" 
-                  className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:bg-gray-800 hover:text-white transition-all duration-300"
-                >
-                  <span className="text-xl">📧</span>
-                </a>
-                <a 
-                  href="#" 
-                  className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:bg-pink-500 hover:text-white transition-all duration-300"
-                >
-                  <span className="text-xl">📷</span>
+                  <img 
+                    src="/icons8-github-50.png" 
+                    alt="GitHub" 
+                    className="w-6 h-6 group-hover:brightness-0 group-hover:invert transition-all duration-300"
+                  />
                 </a>
               </div>
             </div>
@@ -160,32 +207,26 @@ const Contact = () => {
               
               <button
                 type="submit"
-                className="w-full bg-gray-900 text-white font-medium py-4 px-8 rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                disabled={isLoading}
+                className={`w-full font-medium py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 ${
+                  isLoading 
+                    ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
+                    : 'bg-gray-900 text-white hover:bg-gray-800'
+                }`}
               >
-                Send Message
-                <span>✈️</span>
+                {isLoading ? (
+                  <>
+                    <span className="animate-spin">⌛</span>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <span>✈️</span>
+                  </>
+                )}
               </button>
             </form>
-          </div>
-        </div>
-        
-        {/* Bottom CTA */}
-        <div className="mt-24 text-center">
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Ready to start your project?
-            </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Let's discuss how we can bring your ideas to life and create something amazing together.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-gray-900 text-white font-medium rounded-xl hover:bg-gray-800 transition-all duration-300">
-                Schedule a Call
-              </button>
-              <button className="px-8 py-4 bg-white text-gray-900 font-medium rounded-xl border border-gray-300 hover:bg-gray-50 transition-all duration-300">
-                View Portfolio
-              </button>
-            </div>
           </div>
         </div>
       </div>

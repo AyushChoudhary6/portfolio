@@ -53,25 +53,7 @@ const Header = () => {
             </motion.a>
           </motion.li>
           
-          <motion.li
-            whileHover={{ 
-              scale: 1.05,
-              y: -2
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            <motion.a 
-              href="#projects" 
-              className="text-gray-800 font-medium hover:text-gray-900 transition-all duration-300 py-2 px-3 rounded-full relative"
-              whileHover={{
-                backgroundColor: "rgba(255, 255, 255, 0.4)",
-                backdropFilter: "blur(8px)",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
-              }}
-            >
-              <span className="relative z-10">Work</span>
-            </motion.a>
-          </motion.li>
+          
           
           <motion.li
             whileHover={{ 
@@ -93,6 +75,26 @@ const Header = () => {
             </motion.a>
           </motion.li>
           
+          <motion.li
+            whileHover={{ 
+              scale: 1.05,
+              y: -2
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.a 
+              href="#projects" 
+              className="text-gray-800 font-medium hover:text-gray-900 transition-all duration-300 py-2 px-3 rounded-full relative"
+              whileHover={{
+                backgroundColor: "rgba(255, 255, 255, 0.4)",
+                backdropFilter: "blur(8px)",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+              }}
+            >
+              <span className="relative z-10">Work</span>
+            </motion.a>
+          </motion.li>
+
           <motion.li
             whileHover={{ 
               scale: 1.05,
